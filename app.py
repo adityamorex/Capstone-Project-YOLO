@@ -3,6 +3,8 @@ from flask import Flask, render_template, request, redirect, send_file, url_for
 from werkzeug.utils import secure_filename, send_from_directory
 import os
 import subprocess
+import sys
+#sys.path.append('C:/Users/adity/Object-Detection-YOLO/YOLOv5-Flask/yolo/Lib/site-packages/cv2')
 
 app = Flask(__name__)
 
@@ -20,13 +22,17 @@ def hello_world():
 def detect():
     if not request.method == "POST":
         return
-    video = request.files['video']
-    video.save(os.path.join(uploads_dir, secure_filename(video.filename)))
-    print(video)
-    subprocess.run("ls")
-    subprocess.run(['python3', 'detect.py', '--source', os.path.join(uploads_dir, secure_filename(video.filename))])
 
-    # return os.path.join(uploads_dir, secure_filename(video.filename))
+    video = request.files['video']
+    video_path = os.path.join(uploads_dir, secure_filename(video.filename))
+    video.save(video_path)
+    
+    # Print the list of files in the uploads directory
+    files_in_uploads = os.listdir(uploads_dir)
+    print("Files in uploads directory:", files_in_uploads)
+
+    subprocess.run(['python3', 'detect.py', '--source', video_path])
+
     obj = secure_filename(video.filename)
     return obj
 

@@ -9,9 +9,16 @@ import sys
 import time
 from pathlib import Path
 
+#import cv2
+import subprocess
+
+#subprocess.check_call(['pip', 'install', 'opencv-python'])
+#subprocess.check_call(['pip', 'install', 'torch'])
+
 import cv2
 import torch
 import torch.backends.cudnn as cudnn
+
 
 FILE = Path(__file__).absolute()
 sys.path.append(FILE.parents[0].as_posix())  # add yolov5/ to path
